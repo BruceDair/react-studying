@@ -1,0 +1,10 @@
+该demo1跟着阮一峰的http://www.ruanyifeng.com/blog/2015/03/react.html 的demo学习的。
+有些不同的是：
+1.引入js的时候没有引入browser.min.js，而引入了JSXTransformer.js。
+引入JSXTransformer.js的目的是写demo的时候不用通过命令将jsx代码转换成js代码，方便demo测试。
+注意：
+引入JSXTransformer.js 那么js的标签是<script type="text/jsx"></script>不需要编译
+引入browser.min.js 那么js的标签是<script type="text/babel"></script>需要编译，编译代码为$ babel src --out-dir build
+
+
+
