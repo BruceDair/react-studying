@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="../build/react.js"></script>
+		<script src="../build/react-dom.js"></script>
+		<script src="../build/JSXTransformer.js"></script>
+	</head>
+	<body>
+		<div id="demo1Container"></div>
+		<br/>
+		<div id="demo2Container"></div>
+		<br/>
+		<div id="demo3Container"></div>
+		<br/>
+		<div id="demo4Container"></div>
+		<br/>
+		<div id="demo5Container"></div>
+		<br/>
+		<div id="demo6Container"></div>
+		<br/>
+		<div id="demo7Container"></div>
+		<br/>
+		<div id="demo8Container"></div>
+		<br/>
+		<div id="demo9Container"></div>
+		<br/>
+		<div id="demo10Container"></div>
+		<br/>
+		<div id="demo11Container"></div>
+		<br/>
+		<div id="demo12Container"></div>
+		<br/>
+		<div id="demo13Container"></div>
+		<br/>
+		<div id="demo14Container"></div>
+		<br/>
+		<div id="demo15Container"></div>
+		<br/>
+		<div id="demo16Container"></div>
+		<br/>
+		<div id="demo17Container"></div>
+		<br/>
+		<div id="demo18Container"></div>
+		<script type="text/jsx">
+			//demo1------------
+			ReactDOM.render(
+			  <h1>Hello, world!</h1>,
+			  document.getElementById('demo1Container')
+			);
+
+			//demo2------------
+			var names = ['Alice','Emily','Kate'];
+			ReactDOM.render(
+				<div>
+				{names.map(function(name){
+					return <div>Hello,{name}</div>
+				})}
+				</div>,
+				document.getElementById('demo2Container')
+			);
+
+			//demo3-----------
+			var arr = [<h1>Hello world</h1>,<h2>React is awssome</h2>];
+			ReactDOM.render(<div>{arr}</div>,document.getElementById('demo3Container'));
+
+			//demo4------
+			var HelloMessage = React.createClass({
+				render:function(){
+					return <h1>Hello {this.props.name}</h1>
+				}
+			});
+			ReactDOM.render(<HelloMessage name="John"/>,document.getElementById('demo4Container'));
+			
+			//demo5-------------
+			var NotesList =  React.createClass({
+				render:function(){
+					
+					return (
+						<ol>
+						{
+							React.Children.map(this.props.children,function(child){
+								return <li>{child}</li>
+							})
+						}
+						</ol>
+					);
+				}
+			});
+			ReactDOM.render(
+				<div>
+				<NotesList>
+					<span>hello</span>
+					<span>world</span>
+				</NotesList>
+				</div>,
+				document.getElementById('demo5Container')
+			);
+
+			//demo6 -------------
+			var MyTitle = React.createClass({
+				propTypes :{
+					title:React.PropTypes.string.isRequired
+				},
+				render:function(){
+					return <h1>{this.props.title}</h1>
+				}
+			});
+			var data = '123';
+			ReactDOM.render(<MyTitle title={data}/>,document.getElementById('demo6Container'));
+
+			//demo7 ------------
+			var MyTitleSe = React.createClass({
+				getDefaultProps: function(){
+					return {
+						title: 'hello world'
+					};
+				},
+				render:function(){
+					return <h1>{this.props.title}</h1>;
+				}
+			});
+
+			ReactDOM.render(<MyTitleSe /> ,document.getElementById('demo7Container'));
+
+			//demo8 ------------
+			var MyComponent = React.createClass({
+				handleClick:function(){
+					this.refs.myTextInput.focus();
+				},
+				render:function(){
+					return (
+						<div>
+							<input type='text' ref='myTextInput'/>
+							<input type='button' value='Focus the text input' onClick={this.handleClick}/>
+						</div>
+					);
+				}
+			});
+
+			ReactDOM.render(<MyComponent/>,document.getElementById('demo8Container'));
+
+			//demo9-----------------------
+			var LikeButton = React.createClass({
+				getInitialState:function(){
+					return {liked:false};
+				},
+				handleClick:function(event){
+					this.setState({liked:!this.state.liked});
+				},
+				render:function(){
+					var text = this.state.liked?'like':'haven\'t liked';
+					return (
+						<p onClick={this.handleClick}>You {text} this Click to chanage</p>
+					);
+				}
+			});
+
+			ReactDOM.render(<LikeButton />,document.getElementById('demo9Container'));
+
+			//demo10  -----------------
+			var Input = React.createClass({
+				getInitialState:function(){
+					return {value:'hello'};
+				},
+				handleChange:function(event){
+					this.setState({value:event.target.value});
+				},
+				render:function(){
+					var value = this.state.value;
+					return (
+						<div>
+							<input type='text' value={value} onChange={this.handleChange}/>
+							<p>{value}</p>
+						</div>
+					);
+				}
+			});
+
+			ReactDOM.render(<Input/>,document.getElementById('demo10Container'));
+
+			//demo11-----------------------
+			//Mounting:已插入真是dom
+			//updating:正在被渲染
+			//unmounting:已移除真实dom
+			//componentWillReceiveProps(object nextProps)：已加载组件收到新的参数时调用
+			//shouldComponentUpdate(object nextProps, object nextState)：组件判断是否重新渲染时调用
+			var Hello = React.createClass({
+				getInitialState:function(){
+					return {opacity:1.0};
+				},
+				componentDidMount:function(){
+					this.timer = setInterval(function(){
+						var opacity = this.state.opacity;
+						opacity -= .05;
+						if(opacity<0.1){
+							opacity = 1.0;
+						}
+						this.setState({opacity:opacity});
+					}.bind(this),100);
+				},
+				render:function(){
+					return (
+					<div style={{opacity:this.state.opacity}}>
+					Hello {this.props.name}
+					</div>
+					);
+				}
+			});
+			ReactDOM.render(<Hello name="world"/>,document.getElementById('demo11Container'));
+
+			//demo12 -----------  ajax 这个方法必须引入jquery
+			var UserGist = React.createClass({
+				getInitialState:function(){
+					return {
+						username:'',
+						lastGistUrl:''
+					};
+				},
+				componentDidMount:function(){
+					console.log("--------------"+this.props.source);
+					$.get(this.props.source,function(result){
+						console.log(resul);
+						var lastGist = result[0];
+						if(this.isMounted){
+							this.setState({
+								username:lastGist.owner.login,
+								lastGistUrl:lastGistUrl.html_url
+							});
+						}
+					}).bind(this);
+				},
+				render:function(){
+					return (
+					<div>
+					{this.state.username}'s last gis is
+					<a href={this.setState.lastGistUrl}>here</a>
+					</div>
+					);
+				}
+			});
+
+			ReactDOM.render(
+			  <UserGist source="https://api.github.com/users/octocat/gists" />,
+			  document.getElementById('demo12Container')
+			);
+		</script>
+	</body>
+</html>
